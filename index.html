@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reinbouw &amp; Glas go-live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Layout zoals de eerdere go-live pagina's (Malermo, Ruil&Groei): bovenaan de opzet in één tabel, daarna de drie video's met hun drie teksten, daarna de drie statische ads (alle formaten, klik voor groot) met hun drie teksten.
+   Huisstijl uit het logo van Reinbouw & Glas: marineblauw, helder blauw en hemelsblauw, strak en zakelijk.
+   STAAT NOG OPEN: alles met class "missing", "wait" of "pending" is een placeholder. Zie README.md voor wat er per blok in moet. */
+:root {
+  --bg: #F5F8FC; --surface: #FFFFFF; --band: #EAF1F9; --ink: #0B1640; --ink-2: #3A4566; --muted: #6B7591;
+  --line: #DCE4EF; --line-soft: #E8EEF6; --navy: #00155B; --blue: #2080F8; --sky: #41CEFC; --sky-soft: #E3F6FE;
+  --chip: #EEF3FA; --pend: #8A6A1E; --pend-soft: #FBF3DF;
+  --shadow: 0 14px 30px -18px rgba(0, 21, 91, .45);
+  --f-display: 'Saira', 'Segoe UI', system-ui, sans-serif;
+  --f-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #070D24; --surface: #0E1736; --band: #131E42; --ink: #EEF2FB; --ink-2: #C3CBE0; --muted: #8C97B5;
+    --line: #22305A; --line-soft: #1A2650; --navy: #E6ECFF; --blue: #6AAEFF; --sky: #6FDCFF; --sky-soft: #0F2C46;
+    --chip: #17224A; --pend: #E3C27A; --pend-soft: #2E2814;
+    --shadow: 0 14px 30px -18px rgba(0, 0, 0, .8); color-scheme: dark;
+  }
+  :root:not([data-theme="light"]) .logo .logo-l { display: none; }
+  :root:not([data-theme="light"]) .logo .logo-d { display: block; }
+}
+:root[data-theme="dark"] {
+  --bg: #070D24; --surface: #0E1736; --band: #131E42; --ink: #EEF2FB; --ink-2: #C3CBE0; --muted: #8C97B5;
+  --line: #22305A; --line-soft: #1A2650; --navy: #E6ECFF; --blue: #6AAEFF; --sky: #6FDCFF; --sky-soft: #0F2C46;
+  --chip: #17224A; --pend: #E3C27A; --pend-soft: #2E2814;
+  --shadow: 0 14px 30px -18px rgba(0, 0, 0, .8); color-scheme: dark;
+}
+:root[data-theme="dark"] .logo .logo-l { display: none; }
+:root[data-theme="dark"] .logo .logo-d { display: block; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 15.5px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+.wrap { max-width: 1160px; margin: 0 auto; padding-block: 28px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+
+/* kopregel */
+.top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px 20px; padding-bottom: 16px; border-bottom: 1px solid var(--line); }
+.logo { display: block; line-height: 0; }
+.logo img { height: 52px; width: auto; display: block; }
+.logo .logo-d { display: none; }
+.status { font-size: 13.5px; color: var(--muted); }
+
+/* intro */
+.hero { margin-top: 44px; }
+.eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--blue); margin: 0 0 10px; }
+h1 { font-family: var(--f-display); font-weight: 700; font-size: clamp(60px, 10.5vw, 118px); line-height: .9; letter-spacing: -0.025em; margin: 0; color: var(--navy); }
+.h1sub { font-family: var(--f-display); font-weight: 500; font-size: clamp(24px, 3.8vw, 38px); line-height: 1.15; color: var(--blue); margin: 10px 0 0; }
+.lede { max-width: 64ch; color: var(--ink-2); font-size: 16.5px; margin: 22px 0 0; }
+.stats { display: flex; flex-wrap: wrap; gap: 18px 40px; margin-top: 26px; }
+.stats div { display: flex; flex-direction: column; }
+.stats b { font-family: var(--f-display); font-weight: 700; font-size: 40px; line-height: 1; font-variant-numeric: tabular-nums; color: var(--navy); }
+.stats span { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 7px; }
+.jump { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 0; padding: 0; list-style: none; }
+.jump a { display: inline-flex; font-size: 14px; font-weight: 500; padding: 7px 14px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); text-decoration: none; }
+.jump a:hover { border-color: var(--blue); }
+
+/* blokken */
+.block { margin-top: 66px; padding-top: 42px; border-top: 1px solid var(--line); scroll-margin-top: 12px; }
+.bhead { margin-bottom: 30px; }
+h2 { font-family: var(--f-display); font-weight: 700; font-size: clamp(34px, 4.8vw, 48px); line-height: 1.02; margin: 0; letter-spacing: -0.015em; text-wrap: balance; color: var(--navy); }
+h3 { font-family: var(--f-display); font-weight: 600; font-size: clamp(23px, 2.8vw, 28px); line-height: 1.12; margin: 0; text-wrap: balance; }
+.blede { max-width: 66ch; color: var(--ink-2); margin: 12px 0 0; }
+.label { font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+.sub-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin: 0 0 12px; }
+
+/* placeholders */
+.pending { color: var(--pend); font-style: italic; }
+.ph-line { display: block; height: 11px; border-radius: 3px; background: var(--band); margin: 9px 0; }
+.ph-line.s { width: 55%; } .ph-line.m { width: 78%; }
+
+/* opzet */
+.ov { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 28px; align-items: start; }
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.matrix { width: 100%; min-width: 600px; border-collapse: collapse; font-size: 14.5px; }
+.matrix th { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.matrix td { padding: 11px 16px; border-bottom: 1px solid var(--line-soft); vertical-align: middle; }
+.matrix tr:last-child td { border-bottom: 0; }
+.matrix tr.grp td { padding: 9px 16px; background: var(--band); border-bottom: 1px solid var(--line); }
+.grp-name { font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--blue); }
+.cr { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.mini { width: 36px; height: 45px; border-radius: 4px; flex: none; position: relative; overflow: hidden; background: repeating-linear-gradient(135deg, var(--band) 0 6px, var(--bg) 6px 12px); outline: 1px dashed var(--line); outline-offset: -1px; }
+.mini img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mini.vid::after { content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-35%, -50%); border-style: solid; border-width: 6px 0 6px 10px; border-color: transparent transparent transparent var(--muted); }
+.cr small { display: block; font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+.cr strong { font-family: var(--f-display); font-size: 18px; font-weight: 600; line-height: 1.2; }
+.cr:hover strong { text-decoration: underline; text-underline-offset: 3px; }
+.fchip { display: inline-block; font-size: 12px; font-weight: 600; padding: 2px 7px; border-radius: 4px; margin: 2px 4px 2px 0; background: var(--chip); color: var(--ink-2); border: 1px solid var(--line-soft); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fchip.wait { background: var(--pend-soft); color: var(--pend); border: 1px dashed var(--pend); }
+.tnums { font-size: 13.5px; font-weight: 600; color: var(--ink-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.side { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; }
+.box p { margin: 0; font-size: 14px; color: var(--ink-2); line-height: 1.55; }
+.box p + p { margin-top: 8px; }
+.legend { display: grid; grid-template-columns: 76px minmax(0, 1fr); row-gap: 6px; margin: 0; font-size: 14px; }
+.legend dt { font-weight: 600; font-variant-numeric: tabular-nums; }
+.legend dd { margin: 0; color: var(--ink-2); }
+.legend + p { margin-top: 10px; }
+.todo ul { margin: 0; padding: 0; list-style: none; font-size: 14px; color: var(--ink-2); display: flex; flex-direction: column; gap: 6px; }
+.todo li { display: flex; gap: 10px; align-items: baseline; line-height: 1.45; }
+.todo li::before { content: ''; flex: none; width: 11px; height: 11px; border-radius: 3px; border: 1.5px solid var(--pend); transform: translateY(1px); }
+.todo li.done::before { background: var(--blue); border-color: var(--blue); }
+.box.accent { background: var(--sky-soft); border-color: transparent; }
+
+/* video */
+.vlist { display: flex; flex-direction: column; gap: 52px; }
+.vrow { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 40px; align-items: start; scroll-margin-top: 12px; }
+.vframe { position: relative; display: block; aspect-ratio: 9 / 16; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); }
+.vplay { background: #070D24; }
+.vplay video { width: 100%; height: 100%; object-fit: cover; display: block; background: #070D24; }
+.vframe.missing { box-shadow: none; background: repeating-linear-gradient(135deg, var(--band) 0 10px, var(--bg) 10px 20px); outline: 1.5px dashed var(--line); outline-offset: -1.5px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; color: var(--pend); font-style: italic; font-size: 14px; padding: 16px; }
+.vframe.missing::before { content: ''; width: 58px; height: 58px; border-radius: 50%; background: var(--surface); box-shadow: 0 6px 18px -10px rgba(0, 21, 91, .5); }
+.vframe.missing::after { content: ''; position: absolute; left: 50%; top: calc(50% - 18px); transform: translate(-32%, -50%); border-style: solid; border-width: 10px 0 10px 15px; border-color: transparent transparent transparent var(--blue); }
+.vinfo { min-width: 0; }
+.vinfo h3 { margin-bottom: 12px; }
+.vfacts { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; margin: 0 0 14px; padding: 0; }
+.vinfo > p { margin: 0; max-width: 58ch; color: var(--ink-2); }
+.onscreen { margin: 18px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+.onscreen li { display: grid; grid-template-columns: 50px minmax(0, 1fr); gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line-soft); font-size: 15px; line-height: 1.45; }
+.onscreen .ts { font-variant-numeric: tabular-nums; font-weight: 600; color: var(--blue); font-size: 13.5px; }
+.files { display: flex; flex-wrap: wrap; gap: 8px 10px; margin: 16px 0 0; padding: 0; list-style: none; }
+.files a, .files span { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; padding: 7px 13px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); text-decoration: none; }
+.files a:hover { border-color: var(--blue); }
+.files span.off { color: var(--muted); border-style: dashed; background: transparent; }
+
+/* statische ads */
+.slist { display: flex; flex-direction: column; gap: 60px; }
+.srow { scroll-margin-top: 12px; }
+.shead { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 440px); gap: 12px 40px; align-items: end; margin-bottom: 20px; }
+.squote { font-family: var(--f-display); font-weight: 500; font-size: 20px; line-height: 1.3; color: var(--ink-2); margin: 8px 0 0; }
+.state { display: inline-flex; align-items: center; gap: 7px; margin-top: 12px; font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
+.state::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.state.ok { color: var(--blue); background: var(--sky-soft); }
+.state.wait { color: var(--pend); background: var(--pend-soft); }
+.sfacts { display: grid; grid-template-columns: 86px minmax(0, 1fr); gap: 5px 12px; margin: 0; font-size: 14px; line-height: 1.45; }
+.sfacts dt { color: var(--muted); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; padding-top: 3px; }
+.sfacts dd { margin: 0; color: var(--ink-2); overflow-wrap: anywhere; }
+.fmain { display: flex; gap: 14px; align-items: flex-start; }
+.shot { margin: 0; min-width: 0; flex-basis: 0; flex-shrink: 1; }
+.fmain .r45 { flex-grow: .8; }
+.fmain .r916 { flex-grow: .5625; }
+.fmain .r191 { flex-grow: 1.9108; }
+.fmain .r11 { flex-grow: 1; }
+.media { position: relative; display: block; width: 100%; border-radius: 8px; overflow: hidden; background: var(--band); box-shadow: var(--shadow); }
+.r45 .media { aspect-ratio: 4 / 5; }
+.r916 .media { aspect-ratio: 9 / 16; }
+.r191 .media { aspect-ratio: 1200 / 628; }
+.r11 .media { aspect-ratio: 1 / 1; }
+button.media { padding: 0; border: 0; cursor: zoom-in; font: inherit; }
+.media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .25s ease; }
+button.media:hover img { transform: scale(1.015); }
+.media.missing { background: repeating-linear-gradient(135deg, var(--band) 0 10px, var(--bg) 10px 20px); box-shadow: none; outline: 1.5px dashed var(--line); outline-offset: -1.5px; display: flex; align-items: center; justify-content: center; text-align: center; color: var(--pend); font-style: italic; font-size: 14px; line-height: 1.35; padding: 10px; }
+.shot figcaption { margin-top: 9px; font-size: 13px; color: var(--muted); line-height: 1.4; display: flex; flex-wrap: wrap; gap: 0 8px; align-items: baseline; }
+.shot figcaption b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.dl { font-size: 13px; color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }
+.dl:hover { color: var(--ink); }
+
+/* teksten */
+.textset { margin-top: 60px; }
+.thead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 20px; margin-bottom: 16px; }
+.thead p { margin: 0; color: var(--muted); font-size: 14.5px; }
+.tcards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
+.tcard { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.tcard header { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding-bottom: 11px; border-bottom: 1px solid var(--line); }
+.tcard h4 { font-family: var(--f-display); font-weight: 600; font-size: 22px; margin: 0; color: var(--navy); }
+.angle { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); text-align: right; }
+.angle.pending { color: var(--pend); font-style: normal; }
+.frow-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.flabel { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin: 0 0 7px; }
+.primary { margin: 0; font-size: 15px; line-height: 1.55; white-space: pre-line; overflow-wrap: anywhere; }
+.copy { appearance: none; border: 1px solid var(--line); background: transparent; color: var(--ink-2); font: inherit; font-size: 12.5px; padding: 2px 10px; border-radius: 4px; cursor: pointer; white-space: nowrap; }
+.copy:hover { border-color: var(--blue); color: var(--ink); }
+.copy.ok { border-color: var(--blue); color: var(--blue); }
+.copy:disabled { cursor: default; opacity: .45; border-style: dashed; }
+.copy:disabled:hover { border-color: var(--line); color: var(--ink-2); }
+.kop { margin-top: auto; padding-top: 13px; border-top: 1px solid var(--line-soft); }
+.kop + .desc { padding-top: 11px; }
+.srow .textset { margin-top: 30px; }
+.srow .thead h3 { font-size: clamp(20px, 2.4vw, 24px); }
+.fval { margin: 0; font-weight: 600; font-size: 15px; line-height: 1.35; overflow-wrap: anywhere; }
+.fval small { font-weight: 400; color: var(--muted); font-size: 13px; }
+.fval.pending { font-weight: 400; }
+.shared { margin-top: 16px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px 24px; padding: 16px 20px; border-radius: 10px; background: var(--band); }
+.shared-title { grid-column: 1 / -1; margin: 0; font-size: 14px; color: var(--ink-2); }
+
+/* instellingen: regio en formulier */
+.setgrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 20px 22px; min-width: 0; }
+.panel h3 { margin-bottom: 4px; }
+.panel .pnote { margin: 0 0 16px; color: var(--muted); font-size: 14px; }
+.kv { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 8px 14px; margin: 0; font-size: 14.5px; line-height: 1.45; }
+.kv dt { color: var(--muted); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; font-weight: 700; padding-top: 3px; }
+.kv dd { margin: 0; color: var(--ink); overflow-wrap: anywhere; }
+.kv dd small { color: var(--muted); font-size: 13px; }
+.ring { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line-soft); }
+.ring .flabel { display: flex; justify-content: space-between; gap: 10px; }
+.places { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.places li { font-size: 13px; padding: 3px 9px; border-radius: 999px; background: var(--chip); color: var(--ink-2); border: 1px solid var(--line-soft); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.places li b { font-weight: 600; color: var(--ink); }
+.places.out li { background: transparent; border-style: dashed; color: var(--muted); text-decoration: line-through; text-decoration-color: var(--muted); }
+.why { margin: 16px 0 0; padding: 12px 14px; border-radius: 8px; background: var(--band); font-size: 14px; color: var(--ink-2); line-height: 1.55; }
+.why p { margin: 0; } .why p + p { margin-top: 6px; }
+.src { margin: 12px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.5; overflow-wrap: anywhere; }
+.src a { color: var(--ink-2); }
+.flow { display: flex; flex-direction: column; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.step { border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; background: var(--bg); }
+.step .sn { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--blue); margin: 0 0 4px; }
+.step .q { margin: 0; font-family: var(--f-display); font-weight: 600; font-size: 19px; line-height: 1.25; color: var(--navy); }
+.opts { margin: 10px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.opts li { display: flex; justify-content: space-between; align-items: baseline; gap: 6px 12px; flex-wrap: wrap; font-size: 14.5px; padding: 7px 11px; border-radius: 6px; background: var(--surface); border: 1px solid var(--line-soft); }
+.opts .to { font-size: 12.5px; font-weight: 600; color: var(--blue); white-space: nowrap; }
+.opts .to.stop { color: var(--pend); }
+.step p.st { margin: 8px 0 0; font-size: 14px; color: var(--ink-2); line-height: 1.5; }
+.step.end { background: var(--surface); }
+@media (max-width: 1000px) { .setgrid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 560px) { .kv { grid-template-columns: minmax(0, 1fr); gap: 2px 0; } .kv dd { margin-bottom: 8px; } .panel { padding: 16px; } }
+
+/* vergroting */
+.lb { position: fixed; inset: 0; z-index: 50; background: rgba(4, 9, 28, .93); display: flex; align-items: center; justify-content: center; padding: 60px 64px 40px; }
+.lb[hidden] { display: none; }
+.lb figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 12px; max-width: 100%; max-height: 100%; }
+.lb img { display: block; max-width: 100%; max-height: calc(100vh - 150px); max-height: calc(100dvh - 150px); width: auto; height: auto; border-radius: 4px; box-shadow: 0 24px 60px -24px rgba(0, 0, 0, .8); }
+.lb figcaption { color: #EEF2FB; font-size: 14.5px; text-align: center; }
+.lb-btn { position: absolute; appearance: none; border: 0; background: rgba(255, 255, 255, .14); color: #fff; width: 44px; height: 44px; border-radius: 50%; font: inherit; font-size: 26px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.lb-btn:hover { background: rgba(255, 255, 255, .24); }
+.lb-close { top: 12px; right: 12px; }
+.lb-prev { left: 10px; top: 50%; transform: translateY(-50%); }
+.lb-next { right: 10px; top: 50%; transform: translateY(-50%); }
+
+.foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; margin-top: 64px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 13.5px; color: var(--muted); }
+
+@media (max-width: 1000px) {
+  .ov { grid-template-columns: minmax(0, 1fr); }
+  .side { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tcards { grid-template-columns: minmax(0, 1fr); }
+  .tcards .tcard { max-width: 680px; }
+  .shead { grid-template-columns: minmax(0, 1fr); align-items: start; }
+}
+@media (max-width: 760px) {
+  .vrow { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .vframe { max-width: 300px; }
+  .fmain { flex-wrap: wrap; row-gap: 18px; }
+  .fmain .r191 { flex-basis: 100%; }
+  .lb { padding: 56px 12px 24px; }
+  .lb-prev, .lb-next { top: auto; bottom: 14px; transform: none; }
+}
+@media (max-width: 560px) {
+  .side { grid-template-columns: minmax(0, 1fr); }
+  .block { margin-top: 52px; padding-top: 34px; }
+  .hero { margin-top: 32px; }
+  .logo img { height: 42px; }
+  .matrix { min-width: 0; }
+  .matrix th:nth-child(2), .matrix td.fmt { display: none; }
+  .matrix th, .matrix td { padding-left: 12px; padding-right: 12px; }
+  .shared { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .media img { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="logo" role="img" aria-label="Reinbouw &amp; Glas">
+      <img class="logo-l" src="img/logo.png" alt="" width="900" height="263">
+      <img class="logo-d" src="img/logo-light.png" alt="" width="900" height="263">
+    </span>
+    <div class="status">12 november 2026 · Opgesteld door GrowGuide</div>
+  </header>
+
+  <section class="hero">
+    <p class="eyebrow">Meta-campagne · go-live</p>
+    <h1>Go-live</h1>
+    <p class="h1sub">video's, ads &amp; teksten</p>
+    <p class="lede">Dit gaat live op Facebook en Instagram: drie video's en drie statische ads. De video's delen drie teksten, en elke statische ad heeft drie eigen teksten. Bekijk alles rustig. Klopt er iets niet, laat het ons dan weten, dan passen we het aan voordat het live gaat.</p>
+    <div class="stats"><div><b>3</b><span>video's</span></div><div><b>3</b><span>statische ads</span></div><div><b>12</b><span>teksten</span></div></div>
+    <ul class="jump">
+      <li><a href="#opzet">Opzet</a></li>
+      <li><a href="#instellingen">Regio &amp; formulier</a></li>
+      <li><a href="#videos">Video's</a></li>
+      <li><a href="#statisch">Statische ads</a></li>
+    </ul>
+  </section>
+
+  <section class="block" id="opzet" aria-labelledby="t-opzet">
+    <div class="bhead">
+      <p class="eyebrow">Opzet</p>
+      <h2 id="t-opzet">Zo zetten we het live</h2>
+      <p class="blede">Er komen twee advertentiesets: één met de drie video's en één met de drie statische ads. De video's delen drie teksten. Elke statische ad heeft drie eigen teksten, die staan direct onder de ad. In Ads Manager vul je die in als meerdere tekstopties bij Primaire tekst, Kop en Beschrijving. Meta laat dan per persoon de combinatie zien die het beste werkt. Alle ads sturen naar een formulier in Meta, er is geen landingspagina.</p>
+    </div>
+    <div class="ov">
+      <div class="tablewrap">
+        <table class="matrix">
+          <thead><tr><th>Ad</th><th>Formaten</th><th>Teksten</th></tr></thead>
+          <tbody>
+            <tr class="grp"><td colspan="3"><span class="grp-name">Advertentieset 1 · Video's</span></td></tr>
+            <!-- PLACEHOLDER: per video de titel, de lengte en een miniatuur (img) invullen -->
+            <tr><td><a class="cr" href="#video-1"><span class="mini vid" aria-hidden="true"><img src="img/video1-mini.jpg" alt=""></span><span><small>Video 1 · 19,6 s</small><strong>Nieuw dubbel glas?</strong></span></a></td><td class="fmt"><span class="fchip">9:16</span><span class="fchip">1:1</span><span class="fchip">1,91:1</span></td><td><span class="tnums">1 · 2 · 3</span></td></tr>
+            <tr><td><a class="cr" href="#video-2"><span class="mini vid" aria-hidden="true"><img src="img/video2-mini.jpg" alt=""></span><span><small>Video 2 · 19,2 s</small><strong>Glas, houtrot en kitwerk</strong></span></a></td><td class="fmt"><span class="fchip">9:16</span><span class="fchip">1:1</span><span class="fchip">1,91:1</span></td><td><span class="tnums">1 · 2 · 3</span></td></tr>
+            <tr><td><a class="cr" href="#video-3"><span class="mini vid" aria-hidden="true"><img src="img/video3-mini.jpg" alt=""></span><span><small>Video 3 · 18,8 s</small><strong>Kan jouw kozijn nog blijven?</strong></span></a></td><td class="fmt"><span class="fchip">9:16</span><span class="fchip">1:1</span><span class="fchip">1,91:1</span></td><td><span class="tnums">1 · 2 · 3</span></td></tr>
+            <tr class="grp"><td colspan="3"><span class="grp-name">Advertentieset 2 · Statische ads</span></td></tr>
+            <!-- PLACEHOLDER: per statische ad de titel en een miniatuur (img) invullen -->
+            <tr><td><a class="cr" href="#static-1"><span class="mini" aria-hidden="true"><img src="img/glasvervanging-1x1.webp" alt=""></span><span><small>Statisch 1</small><strong>Glasvervanging</strong></span></a></td><td class="fmt"><span class="fchip">1:1</span><span class="fchip">9:16</span><span class="fchip">1,91:1</span></td><td><span class="tnums">1 · 2 · 3 eigen</span></td></tr>
+            <tr><td><a class="cr" href="#static-2"><span class="mini" aria-hidden="true"><img src="img/houtrot-1x1.webp" alt=""></span><span><small>Statisch 2</small><strong>Houtrot- en kozijnherstel</strong></span></a></td><td class="fmt"><span class="fchip">1:1</span><span class="fchip">9:16</span><span class="fchip">1,91:1</span></td><td><span class="tnums">1 · 2 · 3 eigen</span></td></tr>
+            <tr><td><a class="cr" href="#static-3"><span class="mini" aria-hidden="true"><img src="img/prijs-1x1.webp" alt=""></span><span><small>Statisch 3</small><strong>Wat kost nieuw glas?</strong></span></a></td><td class="fmt"><span class="fchip">1:1</span><span class="fchip">9:16</span><span class="fchip">1,91:1</span></td><td><span class="tnums">1 · 2 · 3 eigen</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <aside class="side">
+        <div class="box">
+          <p class="label">Formaten</p>
+          <dl class="legend"><dt>9:16</dt><dd>Stories en Reels</dd><dt>4:5 / 1:1</dt><dd>Feeds van Facebook en Instagram</dd><dt>1,91:1</dt><dd>Rechterkolom en zoekresultaten</dd></dl>
+          <p>Zet per ad alle formaten in één advertentie. Meta kiest dan per plaatsing het juiste bestand.</p>
+        </div>
+        <!-- PLACEHOLDER: vinkjes op "done" zetten zodra iets binnen is; als alles binnen is: <li class="done">Alles is binnen</li> -->
+        <div class="box todo">
+          <p class="label">Nog aan te leveren</p>
+          <ul>
+            <li class="done">Drie video's, in 9:16, 1:1 en 1,91:1</li>
+            <li class="done">Drie statische ads, in alle formaten</li>
+            <li class="done">Tekst 1 en 2 voor de video's</li>
+            <li>Tekst 3 voor de video's</li>
+            <li class="done">Drie teksten per statische ad</li>
+            <li class="done">Bestemming: formulier in Meta</li>
+            <li class="done">Regio en formuliervragen (voorstel)</li>
+            <li>Knop</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="block" id="instellingen" aria-labelledby="t-instellingen">
+    <div class="bhead">
+      <p class="eyebrow">Instellingen in Meta</p>
+      <h2 id="t-instellingen">Regio &amp; formulier</h2>
+      <p class="blede">Zo stellen we in waar de ads te zien zijn en wat mensen in het formulier invullen. Dit geldt voor beide advertentiesets.</p>
+    </div>
+    <div class="setgrid">
+      <div class="panel" id="regio">
+        <h3>Regio</h3>
+        <p class="pnote">Een cirkel rond de vestiging in Hilversum, zonder de grote steden aan de rand.</p>
+        <dl class="kv">
+          <dt>Locatie</dt><dd>Speld op Vogelpan 15, 1223 KR Hilversum</dd>
+          <dt>Straal</dt><dd>20 km <small>(het werkgebied dat ReinBouw &amp; Glas zelf noemt)</small></dd>
+          <dt>Uitsluiten</dt><dd>De steden Almere, Amsterdam en Utrecht <small>(in Meta bij locaties uitsluiten)</small></dd>
+          <dt>Wie</dt><dd>Mensen die in dit gebied wonen <small>(als Meta die keuze toont)</small></dd>
+          <dt>Leeftijd</dt><dd>Niet beperken; het formulier filtert al op koopwoning</dd>
+        </dl>
+        <div class="ring">
+          <p class="flabel"><span>Kern · tot 10 km</span></p>
+          <ul class="places"><li>Hilversum <b>2 km</b></li><li>'s-Graveland <b>4</b></li><li>Kortenhoef <b>4</b></li><li>Loosdrecht <b>5</b></li><li>Hollandsche Rading <b>5</b></li><li>Ankeveen <b>6</b></li><li>Bussum <b>6</b></li><li>Westbroek <b>6</b></li><li>Laren <b>7</b></li><li>Tienhoven <b>7</b></li><li>Lage Vuursche <b>7</b></li><li>Maartensdijk <b>7</b></li><li>Eemnes <b>8</b></li><li>Vreeland <b>8</b></li><li>Blaricum <b>9</b></li><li>Naarden <b>9</b></li><li>Nederhorst den Berg <b>9</b></li><li>Baarn <b>9</b></li></ul>
+        </div>
+        <div class="ring">
+          <p class="flabel"><span>Rand · 10 tot 20 km</span></p>
+          <ul class="places"><li>Nigtevecht <b>10</b></li><li>Bilthoven <b>10</b></li><li>Den Dolder <b>11</b></li><li>Soest <b>11</b></li><li>Huizen <b>11</b></li><li>Breukelen <b>12</b></li><li>Maarssen <b>12</b></li><li>De Bilt <b>12</b></li><li>Weesp <b>12</b></li><li>Muiden <b>14</b></li><li>Abcoude <b>14</b></li><li>Zeist <b>15</b></li><li>Bunschoten <b>15</b></li><li>Hoogland <b>16</b></li><li>Amersfoort <b>17</b></li></ul>
+        </div>
+        <div class="ring">
+          <p class="flabel"><span>Valt deels in de cirkel, uitsluiten</span></p>
+          <ul class="places out"><li>Almere</li><li>Amsterdam</li><li>Utrecht</li></ul>
+        </div>
+        <div class="why">
+          <p>Waarom uitsluiten: Almere ligt aan de overkant van het Gooimeer en Amsterdam valt alleen met Zuidoost en IJburg in de cirkel. Utrecht ligt er wel voor een groot deel in, maar is net als de andere twee een grote stad die veel van het budget zou opslokken, terwijl ReinBouw &amp; Glas bewust regionaal en kleinschalig werkt.</p>
+          <p>Let op: Weesp hoort sinds 2022 bij de gemeente Amsterdam. Sluit de stad Amsterdam uit en controleer daarna in Meta dat Weesp nog binnen het bereik valt.</p>
+          <p>Afstanden zijn hemelsbreed vanaf Hilversum en afgerond. Na de eerste leads checken we de postcodes in het formulier.</p>
+        </div>
+        <p class="src">Bron werkgebied: <a href="https://reinbouwenglas.nl/zakelijk/" target="_blank" rel="noopener">reinbouwenglas.nl/zakelijk</a>: “Wij zijn actief in Hilversum en omliggende gemeenten binnen een straal van circa 20 kilometer.” Ook <a href="https://trustoo.nl/noord-holland/hilversum/glaszetter/reinbouw-glas/" target="_blank" rel="noopener">Trustoo</a> noemt “Hilversum en omstreken”.</p>
+      </div>
+
+      <div class="panel" id="formulier">
+        <h3>Formulier</h3>
+        <p class="pnote">Formulier in Meta, type “Hogere intentie”. Twee vragen, daarna de contactgegevens.</p>
+        <ol class="flow">
+          <li class="step">
+            <p class="sn">Vraag 1 · meerkeuze</p>
+            <p class="q">Heb je een koopwoning?</p>
+            <ul class="opts">
+              <li><span>Ja</span><span class="to">→ naar vraag 2</span></li>
+              <li><span>Nee, ik huur</span><span class="to stop">→ formulier afsluiten</span></li>
+            </ul>
+            <p class="st">In Meta met voorwaardelijke logica: “Nee, ik huur” gaat naar een eigen afsluitscherm en wordt geen lead.</p>
+          </li>
+          <li class="step">
+            <p class="sn">Vraag 2 · meerkeuze</p>
+            <p class="q">Op welke termijn wil je een afspraak?</p>
+            <ul class="opts">
+              <li><span>Zo snel mogelijk</span></li>
+              <li><span>Binnen 1 tot 3 maanden</span></li>
+              <li><span>Binnen 3 tot 6 maanden</span></li>
+              <li><span>Ik oriënteer me nog</span></li>
+            </ul>
+            <p class="st">Zo ziet ReinBouw &amp; Glas meteen welke leads het eerst gebeld moeten worden.</p>
+          </li>
+          <li class="step">
+            <p class="sn">Contactgegevens · vooraf ingevuld door Meta</p>
+            <p class="q">Naam, telefoonnummer, e-mail en postcode</p>
+            <p class="st">Postcode erbij om te checken of de lead in het werkgebied valt.</p>
+          </li>
+          <li class="step end">
+            <p class="sn">Afsluitscherm · koopwoning</p>
+            <p class="q">Bedankt voor je aanvraag!</p>
+            <p class="st">ReinBouw &amp; Glas neemt zo snel mogelijk contact met je op om je vraag te bespreken.</p>
+          </li>
+          <li class="step end">
+            <p class="sn">Afsluitscherm · huurwoning</p>
+            <p class="q">Bedankt voor je interesse</p>
+            <p class="st">ReinBouw &amp; Glas helpt alleen eigenaren van een koopwoning. Huur je? Neem dan contact op met je verhuurder.</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="videos" aria-labelledby="t-videos">
+    <div class="bhead">
+      <p class="eyebrow">Advertentieset 1</p>
+      <h2 id="t-videos">Video's</h2>
+      <p class="blede">Drie video's, elk in de formaten die Meta gebruikt. Speel de video's hier af. Met de knoppen ernaast download je de originele bestanden voor Ads Manager.</p>
+    </div>
+
+    <div class="vlist">
+      <!-- Video 1 is binnen (12-11-2026). Afspelen via een lichte 720p-versie in video/, originelen als download in files/. -->
+      <article class="vrow" id="video-1" aria-labelledby="t-video-1">
+        <div class="vframe vplay"><video src="video/video1-9x16.mp4" poster="img/video1-poster.jpg" controls playsinline preload="metadata"></video></div>
+        <div class="vinfo">
+          <p class="sub-eyebrow">Video 1</p>
+          <h3 id="t-video-1">Nieuw dubbel glas?</h3>
+          <ul class="vfacts"><li class="fchip">19,6 seconden</li><li class="fchip">9:16, 1:1 en 1,91:1</li></ul>
+          <p>Een video recht in de camera over vanafprijzen: bij ReinBouw &amp; Glas wordt eerst ingemeten en krijg je vooraf één prijsopgave voor inmeten, leveren en monteren.</p>
+          <ol class="onscreen" aria-label="Tekst in beeld">
+            <li><span class="ts">0:00</span><span>Nieuw dubbel glas?</span></li>
+            <li><span class="ts">0:02</span><span>Pas op voor die vanafprijs</span></li>
+            <li><span class="ts">0:04</span><span>Vanafprijzen · Meerwerk · Verrassingen achteraf</span></li>
+            <li><span class="ts">0:07</span><span>Bij ReinBouw &amp; Glas meten we eerst in en krijg je vooraf één prijsopgave voor: inmeten · leveren · monteren</span></li>
+            <li><span class="ts">0:14</span><span>Wat we afspreken, betaal je. · Duidelijke prijs vooraf</span></li>
+            <li><span class="ts">0:16</span><span><em>Eindbeeld:</em> logo · Dubbel glas laten zetten? · Vooraf duidelijk wat het kost. · Vraag vrijblijvend een offerte aan</span></li>
+          </ol>
+          <ul class="files">
+            <li><a href="files/ReinbouwGlas_Video1_Dubbelglas-vanafprijs_9x16_1080x1920.mp4" download="ReinbouwGlas_Video1_Dubbelglas-vanafprijs_9x16_1080x1920.mp4"><b>9:16</b> MP4 downloaden</a></li>
+            <li><a href="files/ReinbouwGlas_Video1_Dubbelglas-vanafprijs_1x1_1080x1080.mp4" download="ReinbouwGlas_Video1_Dubbelglas-vanafprijs_1x1_1080x1080.mp4"><b>1:1</b> MP4 downloaden</a></li>
+            <li><a href="files/ReinbouwGlas_Video1_Dubbelglas-vanafprijs_1_91x1_1910x1000.mp4" download="ReinbouwGlas_Video1_Dubbelglas-vanafprijs_1_91x1_1910x1000.mp4"><b>1,91:1</b> MP4 downloaden</a></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="vrow" id="video-2" aria-labelledby="t-video-2">
+        <div class="vframe vplay"><video src="video/video2-9x16.mp4" poster="img/video2-poster.jpg" controls playsinline preload="metadata"></video></div>
+        <div class="vinfo">
+          <p class="sub-eyebrow">Video 2</p>
+          <h3 id="t-video-2">Glas, houtrot en kitwerk</h3>
+          <ul class="vfacts"><li class="fchip">19,2 seconden</li><li class="fchip">9:16, 1:1 en 1,91:1</li></ul>
+          <p>Drie klussen, één bedrijf: een kapotte ruit, houtrot in het kozijn en loslatende kit, allemaal bij ReinBouw &amp; Glas, met één vast aanspreekpunt.</p>
+          <ol class="onscreen" aria-label="Tekst in beeld">
+            <li><span class="ts">0:00</span><span>Ruit kapot, houtrot in je kozijn en kit die loslaat?</span></li>
+            <li><span class="ts">0:04</span><span>Drie klussen, drie bedrijven? · Ruit · Houtrot · Kit</span></li>
+            <li><span class="ts">0:06</span><span>Bij ReinBouw &amp; Glas kun je terecht voor: glaszetten · houtrotherstel · kitwerk</span></li>
+            <li><span class="ts">0:11</span><span>Eén vast aanspreekpunt</span></li>
+            <li><span class="ts">0:13</span><span>Duidelijke prijs vooraf, voor het afgesproken werk</span></li>
+            <li><span class="ts">0:15</span><span><em>Eindbeeld:</em> logo · Glas, houtrot en kitwerk · Vraag vrijblijvend een offerte aan</span></li>
+          </ol>
+          <ul class="files">
+            <li><a href="files/ReinbouwGlas_Video2_Gemak-v2_9x16_1080x1920.mp4" download="ReinbouwGlas_Video2_Gemak-v2_9x16_1080x1920.mp4"><b>9:16</b> MP4 downloaden</a></li>
+            <li><a href="files/ReinbouwGlas_Video2_Gemak-v2_1x1_1080x1080.mp4" download="ReinbouwGlas_Video2_Gemak-v2_1x1_1080x1080.mp4"><b>1:1</b> MP4 downloaden</a></li>
+            <li><a href="files/ReinbouwGlas_Video2_Gemak-v2_1_91x1_1910x1000.mp4" download="ReinbouwGlas_Video2_Gemak-v2_1_91x1_1910x1000.mp4"><b>1,91:1</b> MP4 downloaden</a></li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="vrow" id="video-3" aria-labelledby="t-video-3">
+        <div class="vframe vplay"><video src="video/video3-9x16.mp4" poster="img/video3-poster.jpg" controls playsinline preload="metadata"></video></div>
+        <div class="vinfo">
+          <p class="sub-eyebrow">Video 3</p>
+          <h3 id="t-video-3">Kan jouw kozijn nog blijven?</h3>
+          <ul class="vfacts"><li class="fchip">18,8 seconden</li><li class="fchip">9:16, 1:1 en 1,91:1</li></ul>
+          <p>Over houtrot: niet meteen het hele kozijn eruit, maar eerst kijken hoe ver de schade gaat en waar mogelijk alleen het aangetaste deel herstellen of vervangen.</p>
+          <ol class="onscreen" aria-label="Tekst in beeld">
+            <li><span class="ts">0:00</span><span>Houtrot in je kozijn?</span></li>
+            <li><span class="ts">0:02</span><span>Moet dan echt het hele kozijn eruit?</span></li>
+            <li><span class="ts">0:04</span><span>We bekijken eerst hoe ver de schade gaat.</span></li>
+            <li><span class="ts">0:07</span><span>Waar het kan, herstellen of vervangen we alleen het aangetaste deel.</span></li>
+            <li><span class="ts">0:10</span><span>Plaatselijk herstellen, waar mogelijk · Dat kan voordeliger zijn dan je hele kozijn vervangen.</span></li>
+            <li><span class="ts">0:14</span><span><em>Eindbeeld:</em> logo · Kan jouw kozijn nog blijven? · Vraag vrijblijvend een offerte aan</span></li>
+          </ol>
+          <ul class="files">
+            <li><a href="files/ReinbouwGlas_Video3_Besparing_9x16_1080x1920.mp4" download="ReinbouwGlas_Video3_Besparing_9x16_1080x1920.mp4"><b>9:16</b> MP4 downloaden</a></li>
+            <li><a href="files/ReinbouwGlas_Video3_Besparing_1x1_1080x1080.mp4" download="ReinbouwGlas_Video3_Besparing_1x1_1080x1080.mp4"><b>1:1</b> MP4 downloaden</a></li>
+            <li><a href="files/ReinbouwGlas_Video3_Besparing_1_91x1_1910x1000.mp4" download="ReinbouwGlas_Video3_Besparing_1_91x1_1910x1000.mp4"><b>1,91:1</b> MP4 downloaden</a></li>
+          </ul>
+        </div>
+      </article>
+    </div>
+
+    <div class="textset" id="teksten-videos">
+      <div class="thead"><h3>Drie teksten voor de video's</h3><p>Voor alle drie de video's.</p></div>
+      <div class="tcards">
+        <article class="tcard">
+          <header><h4>Tekst 1</h4></header>
+          <div>
+            <div class="frow-head"><p class="flabel">Primaire tekst</p><button type="button" class="copy" data-copy="pv-1">Kopieer</button></div>
+<p class="primary" id="pv-1">Nieuw glas nodig of twijfel je over de staat van je kozijnen? ReinBouw &amp; Glas kijkt wat er bij jouw ramen nodig is. Op je offerte zie je welk werk we doen en wat het kost. Zo weet je waar je akkoord op geeft.</p>
+          </div>
+          <div class="kop"><div class="frow-head"><p class="flabel">Kop</p><button type="button" class="copy" data-copy="kv-1">Kopieer</button></div><p class="fval" id="kv-1">Vooraf duidelijk over werk en prijs</p></div>
+          <div class="desc"><div class="frow-head"><p class="flabel">Beschrijving</p><button type="button" class="copy" data-copy="dv-1">Kopieer</button></div><p class="fval" id="dv-1">Vraag vrijblijvend een offerte aan.</p></div>
+        </article>
+        <article class="tcard">
+          <header><h4>Tekst 2</h4></header>
+          <div>
+            <div class="frow-head"><p class="flabel">Primaire tekst</p><button type="button" class="copy" data-copy="pv-2">Kopieer</button></div>
+<p class="primary" id="pv-2">Glas vervangen, houtrot herstellen of kitnaden vernieuwen? Bij ReinBouw &amp; Glas kun je voor alle drie terecht. Je hebt één vast aanspreekpunt en weet vooraf wat het afgesproken werk kost. Vraag vrijblijvend een offerte aan.</p>
+          </div>
+          <div class="kop"><div class="frow-head"><p class="flabel">Kop</p><button type="button" class="copy" data-copy="kv-2">Kopieer</button></div><p class="fval" id="kv-2">Eén aanspreekpunt voor glas en kozijnen</p></div>
+          <div class="desc"><div class="frow-head"><p class="flabel">Beschrijving</p><button type="button" class="copy" data-copy="dv-2">Kopieer</button></div><p class="fval" id="dv-2">Van je aanvraag tot de oplevering.</p></div>
+        </article>
+        <!-- PLACEHOLDER tekst 3 video's: primaire tekst, kop en beschrijving invullen; .pending en disabled weghalen. -->
+        <article class="tcard">
+          <header><h4>Tekst 3</h4><span class="angle pending">Volgt</span></header>
+          <div>
+            <div class="frow-head"><p class="flabel">Primaire tekst</p><button type="button" class="copy" data-copy="pv-3" disabled>Kopieer</button></div>
+            <p class="primary pending" id="pv-3">Tekst volgt</p>
+            <span class="ph-line m" aria-hidden="true"></span><span class="ph-line" aria-hidden="true"></span><span class="ph-line s" aria-hidden="true"></span>
+          </div>
+          <div class="kop"><div class="frow-head"><p class="flabel">Kop</p><button type="button" class="copy" data-copy="kv-3" disabled>Kopieer</button></div><p class="fval pending" id="kv-3">Kop volgt</p></div>
+          <div class="desc"><div class="frow-head"><p class="flabel">Beschrijving</p><button type="button" class="copy" data-copy="dv-3" disabled>Kopieer</button></div><p class="fval pending" id="dv-3">Beschrijving volgt</p></div>
+        </article>
+      </div>
+      <div class="shared">
+        <p class="shared-title">Hetzelfde bij alle drie de video's</p>
+        <div><p class="flabel">Knop</p><p class="fval pending">Volgt</p></div>
+        <div><p class="flabel">Bestemming</p><p class="fval">Formulier in Meta <small>(geen landingspagina)</small></p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="statisch" aria-labelledby="t-statisch">
+    <div class="bhead">
+      <p class="eyebrow">Advertentieset 2</p>
+      <h2 id="t-statisch">Statische ads</h2>
+      <p class="blede">Drie ads, elk in de formaten die Meta gebruikt en met drie eigen teksten. Klik op een afbeelding om hem groot te bekijken.</p>
+    </div>
+
+    <div class="slist">
+      <!-- Statische ad 1 is binnen (11-11-2026). Zelfde opbouw gebruiken voor statisch 2 en 3:
+           per formaat <button type="button" class="media zoom" data-full="files/…png" data-cap="Titel · formaat"><img src="img/…webp" …></button>
+           en in de figcaption <a class="dl" href="files/…png" download="…png">PNG downloaden</a>. -->
+      <article class="srow" id="static-1" aria-labelledby="t-static-1">
+        <div class="shead">
+          <div>
+            <p class="sub-eyebrow">Statisch 1</p>
+            <h3 id="t-static-1">Glasvervanging</h3>
+            <p class="squote">‘Nieuw glas. Behoud het karakter.’</p>
+            <span class="state ok">Klaar om live te gaan</span>
+          </div>
+          <dl class="sfacts">
+            <dt>Dienst</dt><dd>Glasvervanging in bestaande kozijnen</dd>
+            <dt>In beeld</dt><dd>We kijken welk glas in je bestaande kozijnen past. · Offerte aanvragen, vrijblijvend</dd>
+          </dl>
+        </div>
+        <div class="fmain">
+          <figure class="shot r11">
+            <button type="button" class="media zoom" data-full="files/ReinbouwGlas_Glasvervanging_1x1_1080x1080.png" data-cap="Glasvervanging · 1:1"><img src="img/glasvervanging-1x1.webp" alt="Statische ad Glasvervanging, 1:1" width="720" height="720" loading="lazy"></button>
+            <figcaption><span><b>1:1</b> · Feeds</span><a class="dl" href="files/ReinbouwGlas_Glasvervanging_1x1_1080x1080.png" download="ReinbouwGlas_Glasvervanging_1x1_1080x1080.png">PNG downloaden</a></figcaption>
+          </figure>
+          <figure class="shot r916">
+            <button type="button" class="media zoom" data-full="files/ReinbouwGlas_Glasvervanging_9x16_1080x1920.png" data-cap="Glasvervanging · 9:16"><img src="img/glasvervanging-9x16.webp" alt="Statische ad Glasvervanging, 9:16" width="432" height="768" loading="lazy"></button>
+            <figcaption><span><b>9:16</b> · Stories en Reels</span><a class="dl" href="files/ReinbouwGlas_Glasvervanging_9x16_1080x1920.png" download="ReinbouwGlas_Glasvervanging_9x16_1080x1920.png">PNG downloaden</a></figcaption>
+          </figure>
+          <figure class="shot r191">
+            <button type="button" class="media zoom" data-full="files/ReinbouwGlas_Glasvervanging_1_91x1_1200x628.png" data-cap="Glasvervanging · 1,91:1"><img src="img/glasvervanging-191x100.webp" alt="Statische ad Glasvervanging, 1,91:1" width="1200" height="628" loading="lazy"></button>
+            <figcaption><span><b>1,91:1</b> · Rechterkolom en zoekresultaten</span><a class="dl" href="files/ReinbouwGlas_Glasvervanging_1_91x1_1200x628.png" download="ReinbouwGlas_Glasvervanging_1_91x1_1200x628.png">PNG downloaden</a></figcaption>
+          </figure>
+        </div>
+        <div class="textset" id="teksten-static-1">
+          <div class="thead"><h3>Drie teksten bij deze ad</h3><p>Alleen voor statisch 1.</p></div>
+          <div class="tcards">
+          <article class="tcard">
+            <header><h4>Tekst 1</h4><span class="angle">Karakter behouden</span></header>
+            <div>
+              <div class="frow-head"><p class="flabel">Primaire tekst</p><button type="button" class="copy" data-copy="ps1-1">Kopieer</button></div>
+<p class="primary" id="ps1-1">Een boograam, een erker of een mooie roedeverdeling geeft je huis karakter. Wil je het glas vernieuwen en die uitstraling behouden? ReinBouw &amp; Glas kijkt welk glas in je bestaande kozijnen past. Vraag vrijblijvend een offerte aan.</p>
+            </div>
+            <div class="kop"><div class="frow-head"><p class="flabel">Kop</p><button type="button" class="copy" data-copy="ks1-1">Kopieer</button></div><p class="fval" id="ks1-1">Nieuw glas met behoud van karakter</p></div>
+            <div class="desc"><div class="frow-head"><p class="flabel">Beschrijving</p><button type="button" class="copy" data-copy="ds1-1">Kopieer</button></div><p class="fval" id="ds1-1">Laat bekijken welk glas in je kozijnen past.</p></div>
+          </article>
+          <article class="tcard">
+            <header><h4>Tekst 2</h4><span class="angle">Meer wooncomfort</span></header>
+            <div>
+              <div class="frow-head"><p class="flabel">Primaire tekst</p><button type="button" class="copy" data-copy="ps1-2">Kopieer</button></div>
+<p class="primary" id="ps1-2">Zit je graag bij het raam, maar voelt het daar vaak koud? Als je je glas wilt vervangen, kijken we of isolatieglas in je bestaande kozijnen past. Zo weet je welke mogelijkheden je hebt voor jouw woning.</p>
+            </div>
+            <div class="kop"><div class="frow-head"><p class="flabel">Kop</p><button type="button" class="copy" data-copy="ks1-2">Kopieer</button></div><p class="fval" id="ks1-2">Isolatieglas in je bestaande kozijnen?</p></div>
+            <div class="desc"><div class="frow-head"><p class="flabel">Beschrijving</p><button type="button" class="copy" data-copy="ds1-2">Kopieer</button></div><p class="fval" id="ds1-2">Vraag vrijblijvend een offerte aan.</p></div>
+          </article>
+          <article class="tcard">
+            <header><h4>Tekst 3</h4><span class="angle">Je huis laten passen bij jou</span></header>
+            <div>
+              <div class="frow-head"><p class="flabel">Primaire tekst</p><button type="button" class="copy" data-copy="ps1-3">Kopieer</button></div>
+<p class="primary" id="ps1-3">Juist die karakteristieke ramen maken je huis van jou. Ben je toe aan nieuw glas? ReinBouw &amp; Glas kijkt naar je huidige kozijnen en helpt je een passende keuze te maken.</p>
+            </div>
+            <div class="kop"><div class="frow-head"><p class="flabel">Kop</p><button type="button" class="copy" data-copy="ks1-3">Kopieer</button></div><p class="fval" id="ks1-3">Behoud de uitstraling van je ramen</p></div>
+            <div class="desc"><div class="frow-head"><p class="flabel">Beschrijving</p><button type="button" class="copy" data-copy="ds1-3">Kopieer</button></div><p class="fval" id="ds1-3">Glasvervanging in Hilversum.</p></div>
+          </article>
+          </div>
+          <div class="shared">
+            <p class="shared-title">Hetzelfde bij alle drie de teksten</p>
+            <div><p class="flabel">Knop</p><p class="fval pending">Volgt</p></div>
+            <div><p class="flabel">Bestemming</p><p class="fval">Formulier in Meta <small>(geen landingspagina)</small></p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="srow" id="static-2" aria-labelledby="t-static-2">
+        <div class="shead">
+          <div>
+            <p class="sub-eyebrow">Statisch 2</p>
+            <h3 id="t-static-2">Houtrot- en kozijnherstel</h3>
+            <p class="squote">‘Houtrot onder je raam? Een kleine plek kan groter worden.’</p>
+            <span class="state ok">Klaar om live te gaan</span>
+          </div>
+          <dl class="sfacts">
+            <dt>Dienst</dt><dd>Houtrot- en kozijnherstel</dd>
+            <dt>In beeld</dt><dd>Houtrot kan je kozijn verzwakken. We kijken welk herstel mogelijk is. · Vraag vrijblijvend een offerte aan</dd>
+          </dl>
+        </div>
+        <div class="fmain">
+          <figure class="shot r11">
+            <button type="button" class="media zoom" data-full="files/ReinbouwGlas_Houtrot_1x1_1080x1080.png" data-cap="Houtrot- en kozijnherstel · 1:1"><img src="img/houtrot-1x1.webp" alt="Statische ad Houtrot- en kozijnherstel, 1:1" width="720" height="720" loading="lazy"></button>
+            <figcaption><span><b>1:1</b> · Feeds</span><a class="dl" href="files/ReinbouwGlas_Houtrot_1x1_1080x1080.png" download="ReinbouwGlas_Houtrot_1x1_1080x1080.png">PNG downloaden</a></figcaption>
+          </figure>
+          <figure class="shot r916">
+            <button type="button" class="media zoom" data-full="files/ReinbouwGlas_Houtrot_9x16_1080x1920.png" data-cap="Houtrot- en kozijnherstel · 9:16"><img src="img/houtrot-9x16.webp" alt="Statische ad Houtrot- en kozijnherstel, 9:16" width="432" height="768" loading="lazy"></button>
+            <figcaption><span><b>9:16</b> · Stories en Reels</span><a class="dl" href="files/ReinbouwGlas_Houtrot_9x16_1080x1920.png" download="ReinbouwGlas_Houtrot_9x16_1080x1920.png">PNG downloaden</a></figcaption>
+          </figure>
+          <figure class="shot r191">
+            <button type="button" class="media zoom" data-full="files/ReinbouwGlas_Houtrot_1_91x1_1200x628.png" data-cap="Houtrot- en kozijnherstel · 1,91:1"><img src="img/houtrot-191x100.webp" alt="Statische ad Houtrot- en kozijnherstel, 1,91:1" width="1200" height="628" loading="lazy"></button>
+            <figcaption><span><b>1,91:1</b> · Rechterkolom en zoekresultaten</span><a class="dl" href="files/ReinbouwGlas_Houtrot_1_91x1_1200x628.png" download="ReinbouwGlas_Houtrot_1_91x1_1200x628.png">PNG downloaden</a></figcaption>
+          </figure>
+        </div>
+        <div class="textset" id="teksten-static-2">
+          <div class="thead"><h3>Drie teksten bij deze ad</h3><p>Alleen voor statisch 2.</p></div>
+          <div class="tcards">
+          <article class="tcard">
+            <header><h4>Tekst 1</h4><span class="angle">Schade beperken</span></header>
+            <div>
+              <div class="frow-head"><p class="flabel">Primaire tekst</p><button type="button" class="copy" data-copy="ps2-1">Kopieer</button></div>
+              <p class="primary" id="ps2-1">Houtrot onder je raam? Als je het laat zitten, kan het zich uitbreiden en je kozijn verzwakken. ReinBouw &amp; Glas beoordeelt de staat van het hout en kijkt welk herstel mogelijk is. Vraag vrijblijvend een offerte aan.</p>
+            </div>
+            <div class="kop"><div class="frow-head"><p class="flabel">Kop</p><button type="button" class="copy" data-copy="ks2-1">Kopieer</button></div><p class="fval" id="ks2-1">Laat houtrot op tijd beoordelen</p></div>
+            <div class="desc"><div class="frow-head"><p class="flabel">Beschrijving</p><button type="button" class="copy" data-copy="ds2-1">Kopieer</button></div><p class="fval" id="ds2-1">Houtrot- en kozijnherstel in Hilversum.</p></div>
+          </article>
+          <article class="tcard">
+            <header><h4>Tekst 2</h4><span class="angle">Kozijn behouden</span></header>
+            <div>
+              <div class="frow-head"><p class="flabel">Primaire tekst</p><button type="button" class="copy" data-copy="ps2-2">Kopieer</button></div>
+              <p class="primary" id="ps2-2">Zie je een aangetaste plek in je houten kozijn? Misschien kan het kozijn nog blijven. ReinBouw &amp; Glas kijkt eerst hoe ver de schade gaat. Waar mogelijk herstellen of vervangen we alleen het aangetaste deel.</p>
+            </div>
+            <div class="kop"><div class="frow-head"><p class="flabel">Kop</p><button type="button" class="copy" data-copy="ks2-2">Kopieer</button></div><p class="fval" id="ks2-2">Kan je kozijn nog blijven?</p></div>
+            <div class="desc"><div class="frow-head"><p class="flabel">Beschrijving</p><button type="button" class="copy" data-copy="ds2-2">Kopieer</button></div><p class="fval" id="ds2-2">Ontdek of plaatselijk herstel mogelijk is.</p></div>
+          </article>
+          <article class="tcard">
+            <header><h4>Tekst 3</h4><span class="angle">Grip op de klus</span></header>
+            <div>
+              <div class="frow-head"><p class="flabel">Primaire tekst</p><button type="button" class="copy" data-copy="ps2-3">Kopieer</button></div>
+              <p class="primary" id="ps2-3">Twijfel je hoe groot de schade aan je kozijn is? Laat het hout beoordelen. Je krijgt duidelijkheid over welk herstel mogelijk is en wat het afgesproken werk kost.</p>
+            </div>
+            <div class="kop"><div class="frow-head"><p class="flabel">Kop</p><button type="button" class="copy" data-copy="ks2-3">Kopieer</button></div><p class="fval" id="ks2-3">Weet waar je aan toe bent bij houtrot</p></div>
+            <div class="desc"><div class="frow-head"><p class="flabel">Beschrijving</p><button type="button" class="copy" data-copy="ds2-3">Kopieer</button></div><p class="fval" id="ds2-3">Vraag vrijblijvend een offerte aan.</p></div>
+          </article>
+          </div>
+          <div class="shared">
+            <p class="shared-title">Hetzelfde bij alle drie de teksten</p>
+            <div><p class="flabel">Knop</p><p class="fval pending">Volgt</p></div>
+            <div><p class="flabel">Bestemming</p><p class="fval">Formulier in Meta <small>(geen landingspagina)</small></p></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="srow" id="static-3" aria-labelledby="t-static-3">
+        <div class="shead">
+          <div>
+            <p class="sub-eyebrow">Statisch 3</p>
+            <h3 id="t-static-3">Wat kost nieuw glas?</h3>
+            <p class="squote">‘Vooraf weet je wat het kost.’</p>
+            <span class="state ok">Klaar om live te gaan</span>
+          </div>
+          <dl class="sfacts">
+            <dt>Dienst</dt><dd>Glasvervanging</dd>
+            <dt>In beeld</dt><dd>Vooraf weet je wat het kost en welk werk bij de prijs is inbegrepen. · Vraag vrijblijvend een offerte aan</dd>
+          </dl>
+        </div>
+        <div class="fmain">
+          <figure class="shot r11">
+            <button type="button" class="media zoom" data-full="files/ReinbouwGlas_Prijs-nieuw-glas_1x1_1080x1080.png" data-cap="Wat kost nieuw glas? · 1:1"><img src="img/prijs-1x1.webp" alt="Statische ad Wat kost nieuw glas?, 1:1" width="720" height="720" loading="lazy"></button>
+            <figcaption><span><b>1:1</b> · Feeds</span><a class="dl" href="files/ReinbouwGlas_Prijs-nieuw-glas_1x1_1080x1080.png" download="ReinbouwGlas_Prijs-nieuw-glas_1x1_1080x1080.png">PNG downloaden</a></figcaption>
+          </figure>
+          <figure class="shot r916">
+            <button type="button" class="media zoom" data-full="files/ReinbouwGlas_Prijs-nieuw-glas_9x16_1080x1920.png" data-cap="Wat kost nieuw glas? · 9:16"><img src="img/prijs-9x16.webp" alt="Statische ad Wat kost nieuw glas?, 9:16" width="432" height="768" loading="lazy"></button>
+            <figcaption><span><b>9:16</b> · Stories en Reels</span><a class="dl" href="files/ReinbouwGlas_Prijs-nieuw-glas_9x16_1080x1920.png" download="ReinbouwGlas_Prijs-nieuw-glas_9x16_1080x1920.png">PNG downloaden</a></figcaption>
+          </figure>
+          <figure class="shot r191">
+            <button type="button" class="media zoom" data-full="files/ReinbouwGlas_Prijs-nieuw-glas_1_91x1_1200x628.png" data-cap="Wat kost nieuw glas? · 1,91:1"><img src="img/prijs-191x100.webp" alt="Statische ad Wat kost nieuw glas?, 1,91:1" width="1200" height="628" loading="lazy"></button>
+            <figcaption><span><b>1,91:1</b> · Rechterkolom en zoekresultaten</span><a class="dl" href="files/ReinbouwGlas_Prijs-nieuw-glas_1_91x1_1200x628.png" download="ReinbouwGlas_Prijs-nieuw-glas_1_91x1_1200x628.png">PNG downloaden</a></figcaption>
+          </figure>
+        </div>
+        <div class="textset" id="teksten-static-3">
+          <div class="thead"><h3>Drie teksten bij deze ad</h3><p>Alleen voor statisch 3.</p></div>
+          <div class="tcards">
+          <article class="tcard">
+            <header><h4>Tekst 1</h4><span class="angle">Duidelijke prijs vooraf</span></header>
+            <div>
+              <div class="frow-head"><p class="flabel">Primaire tekst</p><button type="button" class="copy" data-copy="ps3-1">Kopieer</button></div>
+              <p class="primary" id="ps3-1">Nieuw glas nodig? Je wilt vooraf weten wat de klus kost. Bij ReinBouw &amp; Glas krijg je een duidelijke offerte waarin staat welk werk we doen en wat daarbij is inbegrepen. Vraag vrijblijvend een offerte aan.</p>
+            </div>
+            <div class="kop"><div class="frow-head"><p class="flabel">Kop</p><button type="button" class="copy" data-copy="ks3-1">Kopieer</button></div><p class="fval" id="ks3-1">Weet vooraf wat nieuw glas kost</p></div>
+            <div class="desc"><div class="frow-head"><p class="flabel">Beschrijving</p><button type="button" class="copy" data-copy="ds3-1">Kopieer</button></div><p class="fval" id="ds3-1">Een duidelijke prijs voor het afgesproken werk.</p></div>
+          </article>
+          <article class="tcard">
+            <header><h4>Tekst 2</h4><span class="angle">Voorbij de vanafprijs</span></header>
+            <div>
+              <div class="frow-head"><p class="flabel">Primaire tekst</p><button type="button" class="copy" data-copy="ps3-2">Kopieer</button></div>
+              <p class="primary" id="ps3-2">Een vanafprijs vertelt je weinig over jouw ramen. Wil je weten wat glasvervanging bij jou thuis kost? ReinBouw &amp; Glas geeft je een offerte voor jouw klus, zodat je weet waar je akkoord op geeft.</p>
+            </div>
+            <div class="kop"><div class="frow-head"><p class="flabel">Kop</p><button type="button" class="copy" data-copy="ks3-2">Kopieer</button></div><p class="fval" id="ks3-2">Wat kost glasvervanging bij jou?</p></div>
+            <div class="desc"><div class="frow-head"><p class="flabel">Beschrijving</p><button type="button" class="copy" data-copy="ds3-2">Kopieer</button></div><p class="fval" id="ds3-2">Bekijk vooraf wat bij de prijs hoort.</p></div>
+          </article>
+          <article class="tcard">
+            <header><h4>Tekst 3</h4><span class="angle">Rust bij het kiezen</span></header>
+            <div>
+              <div class="frow-head"><p class="flabel">Primaire tekst</p><button type="button" class="copy" data-copy="ps3-3">Kopieer</button></div>
+              <p class="primary" id="ps3-3">Denk je aan nieuw glas voor één raam of meerdere ramen? Met een duidelijke offerte kun je rustig beslissen. ReinBouw &amp; Glas zet vooraf op papier welke werkzaamheden zijn inbegrepen en wat ze kosten.</p>
+            </div>
+            <div class="kop"><div class="frow-head"><p class="flabel">Kop</p><button type="button" class="copy" data-copy="ks3-3">Kopieer</button></div><p class="fval" id="ks3-3">Een offerte die je begrijpt</p></div>
+            <div class="desc"><div class="frow-head"><p class="flabel">Beschrijving</p><button type="button" class="copy" data-copy="ds3-3">Kopieer</button></div><p class="fval" id="ds3-3">Vraag vrijblijvend een offerte aan voor jouw glaswerk.</p></div>
+          </article>
+          </div>
+          <div class="shared">
+            <p class="shared-title">Hetzelfde bij alle drie de teksten</p>
+            <div><p class="flabel">Knop</p><p class="fval pending">Volgt</p></div>
+            <div><p class="flabel">Bestemming</p><p class="fval">Formulier in Meta <small>(geen landingspagina)</small></p></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>12 november 2026</span>
+    <span>Opgesteld door <a href="https://growguide.ai" target="_blank" rel="noopener">GrowGuide</a> voor Reinbouw &amp; Glas</span>
+  </footer>
+</div>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Afbeelding groot bekijken">
+  <button type="button" class="lb-btn lb-close" aria-label="Sluiten">×</button>
+  <button type="button" class="lb-btn lb-prev" aria-label="Vorige afbeelding">‹</button>
+  <figure><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
+  <button type="button" class="lb-btn lb-next" aria-label="Volgende afbeelding">›</button>
+</div>
+
+<script>
+(() => {
+  // Kopieerknoppen
+  document.querySelectorAll('.copy').forEach(btn => btn.addEventListener('click', () => {
+    const el = document.getElementById(btn.dataset.copy);
+    if (!el || btn.disabled) return;
+    const text = el.innerText.trim();
+    const done = () => { btn.textContent = 'Gekopieerd'; btn.classList.add('ok'); setTimeout(() => { btn.textContent = 'Kopieer'; btn.classList.remove('ok'); }, 1600); };
+    const fallback = () => {
+      const r = document.createRange(); r.selectNodeContents(el);
+      const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = 'Geselecteerd, kopieer zelf';
+      setTimeout(() => { btn.textContent = 'Kopieer'; }, 2400);
+    };
+    try {
+      const p = navigator.clipboard && navigator.clipboard.writeText(text);
+      if (p && typeof p.then === 'function') p.then(done, fallback); else fallback();
+    } catch (e) { fallback(); }
+  }));
+
+  // Vergroting (werkt zodra er .zoom-knoppen met afbeeldingen staan)
+  const zooms = Array.from(document.querySelectorAll('.zoom'));
+  const lb = document.getElementById('lb');
+  const lbImg = document.getElementById('lb-img');
+  const lbCap = document.getElementById('lb-cap');
+  let cur = -1, lastFocus = null;
+  const show = (i) => {
+    cur = (i + zooms.length) % zooms.length;
+    const z = zooms[cur];
+    const thumb = z.querySelector('img');
+    lbImg.src = thumb.currentSrc || thumb.src;
+    lbImg.alt = thumb.alt;
+    lbCap.textContent = z.dataset.cap || '';
+    const want = cur, full = new Image();
+    full.onload = () => { if (cur === want && !lb.hidden) lbImg.src = full.src; };
+    full.src = z.dataset.full;
+  };
+  const openLb = (i) => {
+    lastFocus = document.activeElement;
+    lb.hidden = false;
+    document.body.style.overflow = 'hidden';
+    show(i);
+    lb.querySelector('.lb-close').focus();
+  };
+  const closeLb = () => {
+    lb.hidden = true;
+    document.body.style.overflow = '';
+    lbImg.removeAttribute('src');
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  };
+  zooms.forEach((z, i) => z.addEventListener('click', () => openLb(i)));
+  lb.addEventListener('click', (e) => { if (e.target === lb || e.target.closest('.lb-close')) closeLb(); });
+  lb.querySelector('.lb-prev').addEventListener('click', (e) => { e.stopPropagation(); show(cur - 1); });
+  lb.querySelector('.lb-next').addEventListener('click', (e) => { e.stopPropagation(); show(cur + 1); });
+  document.addEventListener('keydown', (e) => {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') closeLb();
+    else if (e.key === 'ArrowLeft') show(cur - 1);
+    else if (e.key === 'ArrowRight') show(cur + 1);
+  });
+
+  // Ankers
+  const go = () => {
+    const id = (location.hash || '').slice(1);
+    const el = id ? document.getElementById(id) : null;
+    if (el) el.scrollIntoView({ block: 'start' });
+  };
+  window.addEventListener('hashchange', go);
+  if (document.readyState === 'complete') go(); else window.addEventListener('load', go);
+})();
+</script>
+</body>
+</html>
