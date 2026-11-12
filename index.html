@@ -172,6 +172,7 @@ button.media:hover img { transform: scale(1.015); }
 .thead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 20px; margin-bottom: 16px; }
 .thead p { margin: 0; color: var(--muted); font-size: 14.5px; }
 .tcards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
+.tcards.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .tcard { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; min-width: 0; }
 .tcard header { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding-bottom: 11px; border-bottom: 1px solid var(--line); }
 .tcard h4 { font-family: var(--f-display); font-weight: 600; font-size: 22px; margin: 0; color: var(--navy); }
@@ -244,7 +245,7 @@ button.media:hover img { transform: scale(1.015); }
 @media (max-width: 1000px) {
   .ov { grid-template-columns: minmax(0, 1fr); }
   .side { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .tcards { grid-template-columns: minmax(0, 1fr); }
+  .tcards, .tcards.two { grid-template-columns: minmax(0, 1fr); }
   .tcards .tcard { max-width: 680px; }
   .shead { grid-template-columns: minmax(0, 1fr); align-items: start; }
 }
@@ -283,8 +284,8 @@ button.media:hover img { transform: scale(1.015); }
     <p class="eyebrow">Meta-campagne · go-live</p>
     <h1>Go-live</h1>
     <p class="h1sub">video's, ads &amp; teksten</p>
-    <p class="lede">Dit gaat live op Facebook en Instagram: drie video's en drie statische ads. De video's delen drie teksten, en elke statische ad heeft drie eigen teksten. Bekijk alles rustig. Klopt er iets niet, laat het ons dan weten, dan passen we het aan voordat het live gaat.</p>
-    <div class="stats"><div><b>3</b><span>video's</span></div><div><b>3</b><span>statische ads</span></div><div><b>12</b><span>teksten</span></div></div>
+    <p class="lede">Dit gaat live op Facebook en Instagram: drie video's en drie statische ads. De video's delen twee teksten, en elke statische ad heeft drie eigen teksten. Bekijk alles rustig. Klopt er iets niet, laat het ons dan weten, dan passen we het aan voordat het live gaat.</p>
+    <div class="stats"><div><b>3</b><span>video's</span></div><div><b>3</b><span>statische ads</span></div><div><b>11</b><span>teksten</span></div></div>
     <ul class="jump">
       <li><a href="#opzet">Opzet</a></li>
       <li><a href="#instellingen">Regio &amp; formulier</a></li>
@@ -297,7 +298,7 @@ button.media:hover img { transform: scale(1.015); }
     <div class="bhead">
       <p class="eyebrow">Opzet</p>
       <h2 id="t-opzet">Zo zetten we het live</h2>
-      <p class="blede">Er komen twee advertentiesets: één met de drie video's en één met de drie statische ads. De video's delen drie teksten. Elke statische ad heeft drie eigen teksten, die staan direct onder de ad. In Ads Manager vul je die in als meerdere tekstopties bij Primaire tekst, Kop en Beschrijving. Meta laat dan per persoon de combinatie zien die het beste werkt. Alle ads sturen naar een formulier in Meta, er is geen landingspagina.</p>
+      <p class="blede">Er komen twee advertentiesets: één met de drie video's en één met de drie statische ads. De video's delen twee teksten. Elke statische ad heeft drie eigen teksten, die staan direct onder de ad. In Ads Manager vul je die in als meerdere tekstopties bij Primaire tekst, Kop en Beschrijving. Meta laat dan per persoon de combinatie zien die het beste werkt. Alle ads sturen naar een formulier in Meta, er is geen landingspagina.</p>
     </div>
     <div class="ov">
       <div class="tablewrap">
@@ -306,9 +307,9 @@ button.media:hover img { transform: scale(1.015); }
           <tbody>
             <tr class="grp"><td colspan="3"><span class="grp-name">Advertentieset 1 · Video's</span></td></tr>
             <!-- PLACEHOLDER: per video de titel, de lengte en een miniatuur (img) invullen -->
-            <tr><td><a class="cr" href="#video-1"><span class="mini vid" aria-hidden="true"><img src="img/video1-mini.jpg" alt=""></span><span><small>Video 1 · 19,6 s</small><strong>Nieuw dubbel glas?</strong></span></a></td><td class="fmt"><span class="fchip">9:16</span><span class="fchip">1:1</span><span class="fchip">1,91:1</span></td><td><span class="tnums">1 · 2 · 3</span></td></tr>
-            <tr><td><a class="cr" href="#video-2"><span class="mini vid" aria-hidden="true"><img src="img/video2-mini.jpg" alt=""></span><span><small>Video 2 · 19,2 s</small><strong>Glas, houtrot en kitwerk</strong></span></a></td><td class="fmt"><span class="fchip">9:16</span><span class="fchip">1:1</span><span class="fchip">1,91:1</span></td><td><span class="tnums">1 · 2 · 3</span></td></tr>
-            <tr><td><a class="cr" href="#video-3"><span class="mini vid" aria-hidden="true"><img src="img/video3-mini.jpg" alt=""></span><span><small>Video 3 · 18,8 s</small><strong>Kan jouw kozijn nog blijven?</strong></span></a></td><td class="fmt"><span class="fchip">9:16</span><span class="fchip">1:1</span><span class="fchip">1,91:1</span></td><td><span class="tnums">1 · 2 · 3</span></td></tr>
+            <tr><td><a class="cr" href="#video-1"><span class="mini vid" aria-hidden="true"><img src="img/video1-mini.jpg" alt=""></span><span><small>Video 1 · 19,6 s</small><strong>Nieuw dubbel glas?</strong></span></a></td><td class="fmt"><span class="fchip">9:16</span><span class="fchip">1:1</span><span class="fchip">1,91:1</span></td><td><span class="tnums">1 · 2</span></td></tr>
+            <tr><td><a class="cr" href="#video-2"><span class="mini vid" aria-hidden="true"><img src="img/video2-mini.jpg" alt=""></span><span><small>Video 2 · 19,2 s</small><strong>Glas, houtrot en kitwerk</strong></span></a></td><td class="fmt"><span class="fchip">9:16</span><span class="fchip">1:1</span><span class="fchip">1,91:1</span></td><td><span class="tnums">1 · 2</span></td></tr>
+            <tr><td><a class="cr" href="#video-3"><span class="mini vid" aria-hidden="true"><img src="img/video3-mini.jpg" alt=""></span><span><small>Video 3 · 18,8 s</small><strong>Kan jouw kozijn nog blijven?</strong></span></a></td><td class="fmt"><span class="fchip">9:16</span><span class="fchip">1:1</span><span class="fchip">1,91:1</span></td><td><span class="tnums">1 · 2</span></td></tr>
             <tr class="grp"><td colspan="3"><span class="grp-name">Advertentieset 2 · Statische ads</span></td></tr>
             <!-- PLACEHOLDER: per statische ad de titel en een miniatuur (img) invullen -->
             <tr><td><a class="cr" href="#static-1"><span class="mini" aria-hidden="true"><img src="img/glasvervanging-1x1.webp" alt=""></span><span><small>Statisch 1</small><strong>Glasvervanging</strong></span></a></td><td class="fmt"><span class="fchip">1:1</span><span class="fchip">9:16</span><span class="fchip">1,91:1</span></td><td><span class="tnums">1 · 2 · 3 eigen</span></td></tr>
@@ -329,12 +330,11 @@ button.media:hover img { transform: scale(1.015); }
           <ul>
             <li class="done">Drie video's, in 9:16, 1:1 en 1,91:1</li>
             <li class="done">Drie statische ads, in alle formaten</li>
-            <li class="done">Tekst 1 en 2 voor de video's</li>
-            <li>Tekst 3 voor de video's</li>
+            <li class="done">Twee teksten voor alle video's</li>
             <li class="done">Drie teksten per statische ad</li>
             <li class="done">Bestemming: formulier in Meta</li>
             <li class="done">Regio en formuliervragen (voorstel)</li>
-            <li>Knop</li>
+            <li class="done">Knop: Meer informatie</li>
           </ul>
         </div>
       </aside>
@@ -502,8 +502,8 @@ button.media:hover img { transform: scale(1.015); }
     </div>
 
     <div class="textset" id="teksten-videos">
-      <div class="thead"><h3>Drie teksten voor de video's</h3><p>Voor alle drie de video's.</p></div>
-      <div class="tcards">
+      <div class="thead"><h3>Twee teksten voor de video's</h3><p>Voor alle drie de video's.</p></div>
+      <div class="tcards two">
         <article class="tcard">
           <header><h4>Tekst 1</h4></header>
           <div>
@@ -522,21 +522,10 @@ button.media:hover img { transform: scale(1.015); }
           <div class="kop"><div class="frow-head"><p class="flabel">Kop</p><button type="button" class="copy" data-copy="kv-2">Kopieer</button></div><p class="fval" id="kv-2">Eén aanspreekpunt voor glas en kozijnen</p></div>
           <div class="desc"><div class="frow-head"><p class="flabel">Beschrijving</p><button type="button" class="copy" data-copy="dv-2">Kopieer</button></div><p class="fval" id="dv-2">Van je aanvraag tot de oplevering.</p></div>
         </article>
-        <!-- PLACEHOLDER tekst 3 video's: primaire tekst, kop en beschrijving invullen; .pending en disabled weghalen. -->
-        <article class="tcard">
-          <header><h4>Tekst 3</h4><span class="angle pending">Volgt</span></header>
-          <div>
-            <div class="frow-head"><p class="flabel">Primaire tekst</p><button type="button" class="copy" data-copy="pv-3" disabled>Kopieer</button></div>
-            <p class="primary pending" id="pv-3">Tekst volgt</p>
-            <span class="ph-line m" aria-hidden="true"></span><span class="ph-line" aria-hidden="true"></span><span class="ph-line s" aria-hidden="true"></span>
-          </div>
-          <div class="kop"><div class="frow-head"><p class="flabel">Kop</p><button type="button" class="copy" data-copy="kv-3" disabled>Kopieer</button></div><p class="fval pending" id="kv-3">Kop volgt</p></div>
-          <div class="desc"><div class="frow-head"><p class="flabel">Beschrijving</p><button type="button" class="copy" data-copy="dv-3" disabled>Kopieer</button></div><p class="fval pending" id="dv-3">Beschrijving volgt</p></div>
-        </article>
       </div>
       <div class="shared">
         <p class="shared-title">Hetzelfde bij alle drie de video's</p>
-        <div><p class="flabel">Knop</p><p class="fval pending">Volgt</p></div>
+        <div><p class="flabel">Knop</p><p class="fval">Meer informatie</p></div>
         <div><p class="flabel">Bestemming</p><p class="fval">Formulier in Meta <small>(geen landingspagina)</small></p></div>
       </div>
     </div>
@@ -613,7 +602,7 @@ button.media:hover img { transform: scale(1.015); }
           </div>
           <div class="shared">
             <p class="shared-title">Hetzelfde bij alle drie de teksten</p>
-            <div><p class="flabel">Knop</p><p class="fval pending">Volgt</p></div>
+            <div><p class="flabel">Knop</p><p class="fval">Meer informatie</p></div>
             <div><p class="flabel">Bestemming</p><p class="fval">Formulier in Meta <small>(geen landingspagina)</small></p></div>
           </div>
         </div>
@@ -679,7 +668,7 @@ button.media:hover img { transform: scale(1.015); }
           </div>
           <div class="shared">
             <p class="shared-title">Hetzelfde bij alle drie de teksten</p>
-            <div><p class="flabel">Knop</p><p class="fval pending">Volgt</p></div>
+            <div><p class="flabel">Knop</p><p class="fval">Meer informatie</p></div>
             <div><p class="flabel">Bestemming</p><p class="fval">Formulier in Meta <small>(geen landingspagina)</small></p></div>
           </div>
         </div>
@@ -745,7 +734,7 @@ button.media:hover img { transform: scale(1.015); }
           </div>
           <div class="shared">
             <p class="shared-title">Hetzelfde bij alle drie de teksten</p>
-            <div><p class="flabel">Knop</p><p class="fval pending">Volgt</p></div>
+            <div><p class="flabel">Knop</p><p class="fval">Meer informatie</p></div>
             <div><p class="flabel">Bestemming</p><p class="fval">Formulier in Meta <small>(geen landingspagina)</small></p></div>
           </div>
         </div>
